@@ -1,0 +1,6 @@
+{
+  "plugins": [
+    { "staticsmith-drafts": {} },
+    { "staticsmith-markdown": {} }
+  ]
+}

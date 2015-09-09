@@ -1,0 +1,5 @@
+{
+  "plugins": {
+    "staticsmith-non-existant": {}
+  }
+}

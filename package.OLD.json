@@ -1,0 +1,80 @@
+{
+  "name": "staticsmith",
+  "version": "1.0.0",
+  "license": "GNU",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codePile/StaticSmith"
+  },
+  "description": "An extremely simple, pluggable static site generator for use by the SPA/CMS OceanPress - A codePile.PBC project.",
+  "bin": {
+    "staticsmith": "bin/staticsmith"
+  },
+  "scripts": {
+    "test": "make test"
+  },
+  "dependencies": {
+    "absolute": "0.0.1",
+    "async": "~1.4.2",
+    "chalk": "^1.1.1",
+    "clone": "^1.0.2",
+    "co-fs-extra": "1.1.0",
+    "commander": "^2.6.0",
+    "fs-extra": "~0.24.0",
+    "gnode": "^0.1.0",
+    "gray-matter": "^2.0.0",
+    "is": "^3.0.1",
+    "is-utf8": "~0.2.0",
+    "recursive-readdir": "^1.2.1",
+    "rimraf": "^2.2.8",
+    "stat-mode": "^0.2.0",
+    "thunkify": "^2.1.2",
+    "unyield": "0.0.1",
+    "ware": "^1.2.0"
+  },
+  "devDependencies": {
+    "assert-dir-equal": "~1.0.1",
+    "co-mocha": "^1.0.1",
+    "staticsmith-drafts": "^0.1.0",
+    "staticsmith-remarkable": "^0.1.0",
+    "mocha": "^2.3.2"
+  },
+  "keywords": [
+    "static",
+    "file",
+    "site",
+    "website",
+    "blog",
+    "generator",
+    "markdown",
+    "oceanpress",
+    "codepile"
+  ],
+  "gitHead": "",
+  "bugs": {
+    "url": "https://github.com/codePile/StaticSmith/issues"
+  },
+  "homepage": "https://github.com/codePile/StaticSmith",
+  "_id": "staticsmith@1.0.0",
+  "_shasum": "",
+  "_from": "staticsmith@^1.0.0",
+  "_npmVersion": "2.7.4",
+  "_nodeVersion": "0.12.2",
+  "_npmUser": {
+    "name": "",
+    "email": ""
+  },
+  "maintainers": [
+    {
+      "name": "",
+      "email": ""
+    }
+  ],
+  "dist": {
+    "shasum": "",
+    "tarball": ""
+  },
+  "directories": {},
+  "_resolved": "",
+  "readme": "ERROR: No README data found!"
+}

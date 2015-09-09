@@ -1,0 +1,190 @@
+#!/usr/bin/env node
+
+/**
+ * StaticSmith Engine
+ * An extremely simple, pluggable static site generator for use
+ * by the SPA/CMS OceanPress - A codePile.PBC project.
+ * 
+ * Original foundation by: Ben Plum <https://github.com/segmentio> -  
+ * Original source: <https://github.com/segmentio/metalsmith>.
+ * @since v1.7.0
+ *
+ * @see http:///TODO
+ * 
+ * 
+ * @author Jason Alan Kennedy <https://github.com/CelticParser>
+ * @Link https://github.com/codePile/StaticSmith
+ * @license http://opensource.org/licenses/GPL-3.0
+ * Copyright (c) 2015 codePile.PBC
+ * 
+ * @since StaticSmith v1.0.0
+ *
+ */
+
+/**
+ * Add backwards compatibility for Node 0.10.
+ */
+require('gnode');
+
+/**
+ * Dependencies.
+ */
+var chalk         = require('chalk')
+  , exists        = require('fs').existsSync
+  , StaticSmith   = require('..')
+  , program       = require('commander')
+  , resolve       = require('path').resolve;
+
+/**
+ * Usage.
+ */
+program
+  .version(require('../package.json').version)
+  .option('-c, --config <path>', 'configuration file location', 'staticsmith.json');
+
+/**
+ * Examples.
+ */
+program.on('--help', function(){
+  console.log(`  Examples:
+      ------------------------------
+      # build from staticsmith.json:
+      $ staticsmith
+      -------------------------------
+      # build from lib/config.json:
+      $ staticsmith --config lib/config.json
+      ---------------------------------------`);
+});
+
+/**
+ * Parse.
+ */
+program.parse(process.argv);
+
+/**
+ * Config.
+ */
+var dir     = process.cwd()
+  , config  = program.config
+  , path    = resolve(dir, config);
+
+if (!exists(path)) {
+  fatal('could not find a ' + config + ' configuration file.');
+}
+
+try {
+  var json = require(path);
+} catch (e) {
+  fatal('it seems like ' + config + ' is malformed.');
+}
+
+/**
+ * StaticSmith.
+ */
+var staticsmith = new StaticSmith(dir);
+
+if (json.source) {
+  staticsmith.source(json.source);
+}
+if (json.destination) {
+  staticsmith.destination(json.destination);
+}
+if (json.concurrency) {
+  staticsmith.concurrency(json.concurrency);
+}
+if (json.metadata) {
+  staticsmith.metadata(json.metadata);
+}
+if (json.clean != null) {
+  staticsmith.clean(json.clean);
+}
+
+/**
+ * modules.
+ */
+normalize(json.modules).forEach(function(module) {
+  for (var name in module) {
+    var opts = module[name]
+      , mod;
+
+    try {
+      var local = resolve(dir, name)
+        , npm   = resolve(dir, 'node_modules', name);
+
+      if (exists(local) || exists(local + '.js')) {
+        mod = require(local);
+      }
+      else if (exists(npm)) {
+        mod = require(npm);
+      }
+      else {
+        mod = require(name);
+      }
+    }
+    catch (e) {
+      fatal('failed to require module "' + name + '".');
+    }
+
+    try {
+      staticsmith.use(mod(opts));
+    }
+    catch (e) {
+      fatal('error using module "' + name + '"...', e.message + '\n\n' + e.stack);
+    }
+  }
+});
+
+/**
+ * Build.
+ */
+staticsmith.build(function(err){
+  if (err) return fatal(err.message, err.stack);
+  log('successfully built to ' + staticsmith.destination());
+});
+
+/**
+ * Log an error and then exit the process.
+ *
+ * @param {String} msg
+ * @param {String} [stack]  Optional stack trace to print.
+ */
+function fatal(msg, stack){
+  console.error(chalk.red(`
+  -----------------------
+  StaticSmith`) + chalk.gray(' · ') + msg);
+  if (stack) {
+    console.error();
+    console.error(chalk.gray(stack));
+  }
+  process.exit(1);
+}
+
+/**
+ * Log a `message`.
+ *
+ * @param {String} message
+ */
+function log(message){
+  console.log(chalk.gray(`
+  ----------------------------
+  StaticSmith · `) + message);
+}
+
+/**
+ * Normalize an `obj` of modules.
+ *
+ * @param {Array or Object} obj
+ * @return {Array}
+ */
+function normalize(obj){
+  if (obj instanceof Array) return obj;
+  var ret = [];
+
+  for (var key in obj) {
+    var module = {};
+    module[key] = obj[key];
+    ret.push(module);
+  }
+
+  return ret;
+}
