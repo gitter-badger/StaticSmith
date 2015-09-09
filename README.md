@@ -1,5 +1,7 @@
 # StaticSmith
 
+[![Join the chat at https://gitter.im/codePile/StaticSmith](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/codePile/StaticSmith?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Build Status](https://travis-ci.org/codePile/StaticSmith.svg)](https://travis-ci.org/codePile/StaticSmith) [![Dependency Status](https://www.versioneye.com/user/projects/55ef38221e87ad001400002d/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55ef38221e87ad001400002d) [![Code Climate](https://codeclimate.com/github/codePile/StaticSmith/badges/gpa.svg)](https://codeclimate.com/github/codePile/StaticSmith)
 
 An extremely simple, _modular_ static site generator forked from [metalsmith](https://github.com/segmentio/metalsmith) which was originaly built by those awesome peps at [Segment](https://segment.com/). StaticSmith was forked (from metalsmith v1.7.0) and re-configured for use by the Single Page Application / Content Management System (SPA/CMS) [OceanPress](https://oceanpress.io) - A [codePile.PBC](http://codepile.org) project.
